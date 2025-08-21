@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: synapse-matrix
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-engine-plugin
+  namespace: synapse-matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-engine-plugin
+  template:
+    metadata:
+      labels:
+        app: spark-engine-plugin
+    spec:
+      containers:
+      - name: spark-engine-plugin
+        image: us-central1-docker.pkg.dev/vatom-459619/spark-engine-plugin-repo/spark-engine-plugin:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-engine-plugin
+  namespace: synapse-matrix
+spec:
+  selector:
+    app: spark-engine-plugin
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
