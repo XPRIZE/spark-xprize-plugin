@@ -260,6 +260,7 @@ spark.on("message.new", async (data: any) => {
                     "single-choice-poll",
                     "numbered-1-5",
                     "numbered-0-5",
+                    "numbered-0-4",
                     "numbered-1-10",
                     "numbered-0-10",
                     "emojies",
